@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <h1>Modification d'un stage</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <form class="form form-horizontal" method="post" role="form">
+                 {{ form.hidden_tag() }}
+                {{ wtf.form_errors(form, hiddens="only") }}
+
+                {{ wtf.form_field(form.nom_eleve) }}
+                <a href="{{url_for('modif_stage', stage_id=stage_id) }}" class="btn btn-warning" role="button" aria-disabled="true"
+            data-toggle="tooltip" data-placement="right" title="modifier stage> <i class="glyphicon glyphicon-chevron-left"></i> Modifier </a>
+
+                {{ wtf.form_field(form.niveau) }}
+
+                {{ wtf.form_field(form.entreprise) }}
+
+                {{ wtf.form_field(form.contact) }}
+
+                {{ wtf.form_field(form.periode) }}
+
+                {{ wtf.form_field(form.date_deb1) }}
+                {{ wtf.form_field(form.date_fin2) }}
+
+
+            </form>
+            <br>
+            <a href="{{url_for('home_stage') }}" class="btn btn-danger" role="button" aria-disabled="true"
+            data-toggle="tooltip" data-placement="right" title="Ajouter un stage> <i class="glyphicon glyphicon-chevron-left"></i> retour</a>
+            <br>
+        </div>
+    </div>
+{% endblock %}

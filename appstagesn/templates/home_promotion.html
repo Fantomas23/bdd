@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+        {% block app_content %}
+
+        <div class="jumbotron">
+            {% if promotion %}
+            <h1> Promotions </h1>
+            {% else %}
+            <h1> Promotions </h1>
+            {% endif %}
+        </div>
+        <div>
+            <table class="table table-hover table-bordered table-striped">
+                <thead>
+                     <tr>
+                        <th> Nom </th>
+                         <th> Année de début </th>
+                          <th> Année de fin </th>
+                         <th> Actions </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+{% for promotion in promotions %}
+                    <tr>
+                        <td> {{ promotion.name }} </td>
+                        <td> {{ promotion.annee_deb }} </td>
+                        <td> {{ promotion.annee_fin }} </td>
+
+                        <td>
+                            <a href="{{url_for('delpromo', promo_id=promotion.id, confirm= 0)}}" class="btn btn-danger" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Supprimer"><i class="glyphicon glyphicon-trash"></i> </a>
+
+                            <a href="{{url_for('update_promo', promo_id=promotion.id)}}" class="btn btn-warning" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Modifier"><i class="glyphicon glyphicon-pencil"></i> </a>
+                        </td>
+                    </tr>
+{% endfor %}
+     </tbody>
+</table>
+        </div>
+<div>
+    <a href="{{url_for('new_promo') }}" class="btn btn-success" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Ajouter un élève"> <i class="glyphicon glyphicon-plus"></i> Promotion</a>
+    <br>
+    <br>
+</div>
+
+
+        {% endblock %}

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+        {% block app_content %}
+
+        <div class="jumbotron">
+            <h1> Classe {{ classe.name }} </h1>
+        </div>
+        <div>
+            <h2> Elèves </h2>
+            <table class="table table-hover table-bordered table-striped">
+                <thead>
+                     <tr>
+                        <th> Nom </th>
+                         <th> Prénom </th>
+                         <th> Promotion </th>
+                         <th> Classe </th>
+                         <th> Téléphone portable </th>
+                         <th> Adresse mail lycée </th>
+                         <th> Adresse mail perso </th>
+                         <th> En activité </th>
+                         <th> Actions </th>>
+
+                    </tr>
+                </thead>
+                <tbody>
+{% for eleve in eleves %}
+                    <tr>
+                        <td> {{ eleve.name }} </td>
+                        <td> {{ eleve.firstname }} </td>
+                        <td> {{ eleve.promotion }} </td>
+                        <td>  {{ eleve.classe.name }}  </td>
+                        <td> {{ eleve.phonenumber }} </td>
+                        <td> {{ eleve.mail }} </td>
+
+                        <td>    {% if eleve.active %}
+                            <button type="button" class="btn btn-success" >
+                                <span class="glyphicon glyphicon-ok-circle">
+                                </span>
+                            </button>
+                                {% else %}
+                            <button type="button" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-remove-circle">
+                                </span>
+                            </button>
+                                {% endif %}
+                        </td>
+
+                        <td>
+                            <a href="{{ url_for('deleleve', eleve_id= eleve.id) }}" class="btn btn-danger" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Supprimer"><i class="glyphicon glyphicon-trash"></i> </a>
+
+                            <a href="{{ url_for('updateleve', eleve_id= eleve.id) }}" class="btn btn-warning" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Modifier"><i class="glyphicon glyphicon-pencil"></i> </a>
+                        </td>
+                    </tr>
+{% endfor %}
+     </tbody>
+</table>
+        </div>
+
+<div>
+    <h2> Profs </h2>
+            <table class="table table-hover table-bordered table-striped">
+                <thead>
+                     <tr>
+                        <th> Nom </th>
+                         <th> Prénom </th>
+                    </tr>
+                </thead>
+                <tbody>
+{% for prof in profs %}
+                    <tr>
+                        <td> {{ prof.name }} </td>
+                        <td> {{ prof.firstname }} </td>
+                    </tr>
+{% endfor %}
+     </tbody>
+</table>
+        </div>
+<div>
+    <a href="{{url_for('home_eleves') }}" class="btn btn-default" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Ajouter une entreprise"> <i class="glyphicon glyphicon-chevron-left"></i> retour</a>
+    <br>
+    <br>
+</div>
+
+
+        {% endblock %}

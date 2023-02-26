@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+        {% block app_content %}
+
+        <div class="jumbotron">
+            {% if niveau %}
+            <h1> Niveaux </h1>
+            {% else %}
+            <h1> Niveaux </h1>
+            {% endif %}
+        </div>
+        <div>
+            <table class="table table-hover table-bordered table-striped">
+                <thead>
+                     <tr>
+                        <th> Nom </th>
+                         <th> Actions </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+{% for niveau in niveaux %}
+                    <tr>
+                        <td> {{ niveau.name }} </td>
+                        <td>
+                            <a href="{{url_for('delNiveau', niveau_id=niveau.id, confirm= 0)}}" class="btn btn-danger" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Supprimer"><i class="glyphicon glyphicon-trash"></i> </a>
+
+                            <a href="{{url_for('updateNiveau', niveau_id=niveau.id)}}" class="btn btn-warning" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Modifier"><i class="glyphicon glyphicon-pencil"></i> </a>
+                        </td>
+                    </tr>
+{% endfor %}
+     </tbody>
+</table>
+        </div>
+<div>
+    <a href="{{url_for('new_niveau') }}" class="btn btn-success" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Ajouter un élève"> <i class="glyphicon glyphicon-plus"></i> Niveau</a>
+    <br>
+    <br>
+</div>
+
+
+        {% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <h1>Nouvelle période de stage</h1>
+    <div class="row">
+        {{ wtf.quick_form(form) }}
+    </div>
+    <br>
+            <a href="{{url_for('home_periode') }}" class="btn btn-danger" role="button" aria-disabled="true"
+            data-toggle="tooltip" data-placement="right" title="Ajouter une période>
+                <i class="glyphicon glyphicon-chevron-left"></i> retour</a>
+        <br>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+        {% block app_content %}
+
+        <div class="jumbotron">
+            {% if anneeScolaires %}
+            <h1> Années Scolaires </h1>
+            {% else %}
+            <h1> Années Scolaires </h1>
+            {% endif %}
+        </div>
+        <div>
+            <table class="table table-hover table-bordered table-striped">
+                <thead>
+                     <tr>
+                        <th> Nom </th>
+                         <th> Actions </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+{% for anneeScolaire in anneeScolaires %}
+                    <tr>
+                        <td> {{ anneeScolaire.name }} </td>
+
+                        <td>
+                            <a href="{{url_for('delAnneeScolaire', anneeScolaire_id=anneeScolaire.id, confirm= 0)}}" class="btn btn-danger" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Supprimer"><i class="glyphicon glyphicon-trash"></i> </a>
+
+                            <a href="{{url_for('updateAnneeScolaire', anneeScolaire_id=anneeScolaire.id)}}" class="btn btn-warning" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Modifier"><i class="glyphicon glyphicon-pencil"></i> </a>
+                        </td>
+                    </tr>
+{% endfor %}
+     </tbody>
+</table>
+        </div>
+<div>
+    <a href="{{url_for('new_anneeScolaire') }}" class="btn btn-success" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Ajouter un élève"> <i class="glyphicon glyphicon-plus"></i> Année Scolaire</a>
+    <br>
+    <br>
+</div>
+
+
+        {% endblock %}

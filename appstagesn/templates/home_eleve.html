@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+        {% block app_content %}
+
+        <div class="jumbotron">
+            {% if entreprise %}
+            <h1> Elève ( ) </h1>
+            {% else %}
+            <h1> Elèves </h1>
+            {% endif %}
+        </div>
+        <div>
+            <table class="table table-hover table-bordered table-striped">
+                <thead>
+                     <tr>
+                        <th> Nom </th>
+                         <th> Prénom </th>
+                          <th> Promotion </th>
+                         <th> Actions </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+{% for eleve in eleves %}
+                    <tr>
+                        <td> {{ eleve.name }} </td>
+                        <td> {{ eleve.firstname }} </td>
+                        <td> {{ eleve.promotion.name}} </td>
+
+                        <td>
+                            <a href="{{url_for('deleleve', eleve_id=eleve.id, confirm= 0)}}" class="btn btn-danger" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Supprimer"><i class="glyphicon glyphicon-trash"></i> </a>
+
+                            <a href="{{url_for('updateleve', eleve_id=eleve.id)}}" class="btn btn-warning" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Modifier"><i class="glyphicon glyphicon-pencil"></i> </a>
+
+                            <a href="{{url_for('details_eleve', eleve_id=eleve.id)}}" class="btn btn-info" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Détails"><i class="glyphicon glyphicon-info-sign"></i> </a>
+                        </td>
+                    </tr>
+{% endfor %}
+     </tbody>
+</table>
+        </div>
+<div>
+    <a href="{{url_for('new_eleve') }}" class="btn btn-success" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Ajouter un élève"> <i class="glyphicon glyphicon-plus"></i> élève</a>
+    <a href="{{url_for('search_eleve') }}" class="btn btn-info" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Rechercher un élève"> <i class="glyphicon glyphicon-search"></i> recherche</a>
+    <br>
+    <br>
+</div>
+
+
+        {% endblock %}

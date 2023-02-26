@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+        {% block app_content %}
+
+        <div class="jumbotron">
+            <h1> Stages </h1>
+        </div>
+
+        <div class="alert alert-danger" role="alert">
+            Souhaitez-vous supprimer ce stage de la base de donnée ?
+            <br>  ATTENTION, cette action est irréversible.</br>
+        </div>
+        <div>
+
+            <a href="{{url_for('delStage',  stage_id= stage.id, confirm=1) }}" class="btn btn-warning" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Supprimer un stage"> <i class="glyphicon glyphicon-minus"></i> Oui</a>
+             <a href="{{url_for('home_stage') }}" class="btn btn-danger" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Annuler supprimer"> <i class="glyphicon glyphicon-remove"></i> Non</a>
+        </div>
+
+
+        {% endblock %}

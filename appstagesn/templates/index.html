@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+        {% block app_content %}
+
+
+<div class="jumbotron">
+  <h1>Gestion entreprises et contacts</h1>
+    <div class="btn-group" role="group" aria-label="entreprises">
+        <a href="{{ url_for('home_entr') }}" class="btn btn-success btn-lg" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Accueil page entreprise"> <i class="glyphicon glyphicon-home"></i> Entreprises</a>
+        <a href="{{ url_for('home_contacts') }}" class="btn btn-success btn-lg" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Accueil page contact"> <i class="glyphicon glyphicon-user"></i> Contacts</a>
+    </div>
+</div>
+
+<div class="jumbotron">
+    <h1>Gestions eleves </h1>
+        <div class="btn-group" role="group" aria-label="élèves">
+            <a href="{{ url_for('home_eleve') }}" class="btn btn-warning btn-lg" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Accueil page élève"> <i class="glyphicon glyphicon-user"></i> Eleves</a>
+            <a href="{{ url_for('home_anneeScolaire') }}" class="btn btn-warning btn-lg" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Accueil page anneeScolaire"> <i class="glyphicon glyphicon-th"></i> Année scolaire </a>
+            <a href="{{ url_for('home_promo') }}" class="btn btn-warning btn-lg" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Accueil page Promotion"> <i class="glyphicon glyphicon-education"></i> Promotions</a>
+            <a href="{{ url_for('home_niveau') }}" class="btn btn-warning btn-lg" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Accueil page Niveau"> <i class="glyphicon glyphicon-arrow-up"></i> Niveaux</a>
+            <a href="{{ url_for('home_classe') }}" class="btn btn-warning btn-lg" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Accueil page Niveau"> <i class="glyphicon glyphicon-inbox"></i> Classes</a>
+        </div>
+</div>
+
+<div class="jumbotron">
+    <h1>Gestions stages </h1>
+        <div class="btn-group" role="group" aria-label="élèves">
+            <a href="{{ url_for('home_stage') }}" class="btn btn-info btn-lg" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Accueil page stage"> <i class="glyphicon glyphicon-link"></i> Stages </a>
+            <a href="{{ url_for('home_periode') }}" class="btn btn-info btn-lg" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Accueil page date"> <i class="glyphicon glyphicon-calendar"></i> Périodes </a>
+        </div>
+</div>
+
+</div>
+
+        {% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+        {% block app_content %}
+
+        <div class="jumbotron">
+            <h1> Recherche d'entreprises </h1>
+        </div>
+        <div>
+            <table class="table table-hover table-bordered table-striped">
+                <thead>
+                     <tr>
+                        <th> Nom </th>
+                         <th> Ville </th>
+                          <th> En activité </th>
+                         <th> Actions </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+{% for entreprise in entreprises %}
+                    <tr>
+                        <td> {{ entreprise.name }} </td>
+                        <td> {{ entreprise.ville }} </td>
+                        <td>    {% if entreprise.active %}
+                            <button type="button" class="btn btn-success">
+                                <span class="glyphicon glyphicon-ok-circle">
+                                </span>
+                            </button>
+                                {% else %}
+                            <button type="button" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-remove-circle">
+                                </span>
+                            </button>
+                                {% endif %}
+                        </td>
+
+                        <td>
+                            <a href="{{ url_for('delentreprise', entreprise_id= entreprise.id, confirm= 0) }}" class="btn btn-danger" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Supprimer"><i class="glyphicon glyphicon-trash"></i> </a>
+
+                            <a href="{{ url_for('updatentreprise', entreprise_id= entreprise.id) }}" class="btn btn-warning" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Modifier"><i class="glyphicon glyphicon-pencil"></i> </a>
+
+                            <a href="{{ url_for('details_entr', entreprise_id= entreprise.id) }}" class="btn btn-info" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Détails"><i class="glyphicon glyphicon-info-sign"></i> </a>
+                        </td>
+                    </tr>
+{% endfor %}
+     </tbody>
+</table>
+        </div>
+<div>
+    <a href="{{url_for('new_entr') }}" class="btn btn-success" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Ajouter une entreprise"> <i class="glyphicon glyphicon-plus"></i> entreprise</a>
+    <a href="{{url_for('search_entreprise') }}" class="btn btn-info" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Rechercher une entreprise"> <i class="glyphicon glyphicon-search"></i> recherche</a>
+    <br>
+    <br>
+</div>
+
+
+        {% endblock %}

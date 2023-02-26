@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+        {% block app_content %}
+
+        <div class="jumbotron">
+            <h1> Entreprises </h1>
+        </div>
+        <div>
+            <table class="table table-hover table-bordered table-striped">
+                <thead>
+                     <tr>
+                        <th> Nom </th>
+                         <th> Adresse </th>
+                         <th> Code Postal </th>
+                         <th> Ville </th>
+                         <th> N° de téléphone </th>
+                         <th> Adresse mail </th>
+                          <th> En activité </th>
+                         <th> Contact(s) </th>
+                         <th> Actions </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> {{ entreprise.name }} </td>
+                        <td> {{ entreprise.adresse1 }} {{ entreprise.adresse2 }} </td>
+                        <td> {{ entreprise.CP }} </td>
+                        <td> {{ entreprise.ville }} </td>
+                        <td> {{ entreprise.phonenumber }} </td>
+                        <td> {{ entreprise.mail }} </td>
+
+                        <td>    {% if entreprise.active %}
+                            <button type="button" class="btn btn-success" >
+                                <span class="glyphicon glyphicon-ok-circle">
+                                </span>
+                            </button>
+                                {% else %}
+                            <button type="button" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-remove-circle">
+                                </span>
+                            </button>
+                                {% endif %}
+                        </td>
+
+                        <td>  <a href="{{ url_for('entr_contacts', entreprise_id= entreprise.id) }}" > Contact(s) </a> </td>
+
+                        <td>
+                            <a href="{{ url_for('delentreprise', entreprise_id= entreprise.id, confirm= 0) }}" class="btn btn-danger" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Supprimer"><i class="glyphicon glyphicon-trash"></i> </a>
+
+                            <a href="{{ url_for('updatentreprise', entreprise_id= entreprise.id) }}" class="btn btn-warning" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Modifier"><i class="glyphicon glyphicon-pencil"></i> </a>
+                        </td>
+                    </tr>
+     </tbody>
+</table>
+        </div>
+<div>
+    <a href="{{url_for('home_entr') }}" class="btn btn-danger" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Ajouter une entreprise"> <i class="glyphicon glyphicon-chevron-left"></i> retour</a>
+    <br>
+    <br>
+</div>
+
+
+        {% endblock %}

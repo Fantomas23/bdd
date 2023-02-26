@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+
+<form action="" method="post" class="" autocomplete="off">
+                    {{ form.csrf_token }}
+                        <div class="row">
+                            <div class="col-xs-5 col-md-5 col-sm-5">
+                                <div class="form-group ">
+                                    <label for="multiselect" class="col-form-label">liste des élèves de la promo *</label>
+                                    {{ form.multiselect(size=40, class='form-control',  multiple="multiple") }}
+                                    <span style="color: #f00"> {% if form.multiselect.errors %}{{ form.multiselect.errors[0] }}{% endif %}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                           <button type="submit" class="btn btn-primary">Valider</button>
+                        </div>
+                    </form>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+        {% block app_content %}
+
+        <div class="jumbotron">
+            {% if entreprise %}
+            <h1> Contacts ({{ entreprise.name }}) </h1>
+            {% else %}
+            <h1> Contacts </h1>
+            {% endif %}
+        </div>
+        <div>
+            <table class="table table-hover table-bordered table-striped">
+                <thead>
+                     <tr>
+                        <th> Nom </th>
+                         <th> Prénom </th>
+                          <th> En activité </th>
+                         <th> Actions </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+{% for contact in contacts %}
+                    <tr>
+                        <td> {{ contact.name }} </td>
+                        <td> {{ contact.firstname }} </td>
+                        <td>    {% if contact.active %}
+                            <button type="button" class="btn btn-success">
+                                <span class="glyphicon glyphicon-ok-circle">
+                                </span>
+                            </button>
+                                {% else %}
+                            <button type="button" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-remove-circle">
+                                </span>
+                            </button>
+                                {% endif %}
+                        </td>
+
+                        <td>
+                            <a href="{{ url_for('delcontact', contact_id= contact.id, confirm= 0) }}" class="btn btn-danger" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Supprimer"><i class="glyphicon glyphicon-trash"></i> </a>
+
+                            <a href="{{ url_for('updatecontact', contact_id= contact.id) }}" class="btn btn-warning" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Modifier"><i class="glyphicon glyphicon-pencil"></i> </a>
+
+                            <a href="{{ url_for('details_contact', contact_id= contact.id) }}" class="btn btn-info" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Détails"><i class="glyphicon glyphicon-info-sign"></i> </a>
+                        </td>
+                    </tr>
+{% endfor %}
+     </tbody>
+</table>
+        </div>
+<div>
+    <a href="{{url_for('new_contact') }}" class="btn btn-success" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Ajouter une entreprise"> <i class="glyphicon glyphicon-plus"></i> contact</a>
+    <a href="{{url_for('search_contact') }}" class="btn btn-info" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Rechercher un contact"> <i class="glyphicon glyphicon-search"></i> recherche</a>
+    <br>
+    <br>
+</div>
+
+
+        {% endblock %}
