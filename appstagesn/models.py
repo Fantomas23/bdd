@@ -42,8 +42,9 @@ class Contact(db.Model):
         return f'{self.name}'
 
 
-eleve_classe = db.Table('eleve_classe', db.Column('classe_id', db.Integer, db.ForeignKey('classe.id')),
-     db.Column('eleve_id', db.Integer, db.ForeignKey('eleve.id')))
+eleve_classe = db.Table('eleve_classe',
+                db.Column('classe_id', db.Integer, db.ForeignKey('classe.id')),
+                db.Column('eleve_id', db.Integer, db.ForeignKey('eleve.id')))
 
 
 class Eleve(db.Model):

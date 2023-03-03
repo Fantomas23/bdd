@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, make_response, send_file, request
 from appstagesn.forms import NewEntrForm, NewContactForm, NewEleveForm, NewPromoForm, NewNiveauForm, NewStageForm1, \
     NewStageForm2, NewPeriodeForm, NewAnneeScolaireForm, SearchEntrForm, SearchContactForm, SearchEleveForm, RegistrationForm, \
-    LoginForm, OldStageForm, NewStageForm3, NewStageForm4, NewClasseForm1,NewClasseForm2, EleveToClasseForm
+    LoginForm, OldStageForm, NewStageForm3, NewStageForm4, NewClasseForm1, EleveToClasseForm
 from appstagesn.models import Entreprise, Contact, Eleve, Classe, Professeur, Promotion, Niveau, Stage, Date, \
     AnneeScolaire, User
 from flask_login import current_user, login_user, logout_user, login_required
@@ -901,33 +901,78 @@ def new_classe1():
     form.groupe.choices = list_groupes
 
     if form.validate_on_submit():
-        promotion = Promotion.query.get(form.promotion.data).name
+        # promotion = Promotion.query.get(form.promotion.data).id
         niveau = Niveau.query.get(form.niveau.data).name
         annee_scolaire = AnneeScolaire.query.get(form.annee_scolaire.data).name
         groupe = form.groupe.data
-        return redirect(url_for('new_classe2', promotion=promotion, niveau=niveau, annee_scolaire=annee_scolaire, groupe=groupe))
+        propo_nom = niveau + str(groupe) + "_" + annee_scolaire
+        oldclasse = Classe.query.filter_by(name=propo_nom).first()
+        if oldclasse:
+            flash(f'La classe {oldclasse.name} '
+                  f'est déjà présent dans votre base de données !')
+            return redirect(url_for('home_classe'))
+        classe = Classe(name=propo_nom, promotion_id=form.promotion.data, niveau_id=form.niveau.data,
+                        annee_scolaire_id=form.annee_scolaire.data)
+        db.session.add(classe)
+        db.session.commit()
+        flash(f'Classe :  {propo_nom} ajoutée !')
+
+        return redirect(url_for('new_classe2', classe_id=classe.id))
     return render_template('newClasse.html', title='Nouvelle classe', form=form)
 
 
-@app.route('/newclasse2/<promotion>/<niveau>/<groupe>/<annee_scolaire>', methods=['GET', 'POST'])
+@app.route('/newclasse2/<classe_id>', methods=['GET', 'POST'])
 @login_required
-def new_classe2(promotion, niveau, annee_scolaire, groupe):
+def new_classe2(classe_id):
     form = EleveToClasseForm()
-    # form = NewClasseForm2()
-    propo_nom = niveau+ groupe + "_" + annee_scolaire
+    new_classe = Classe.query.get(classe_id)
+    list_eleves = [(e.id, e.name+" "+e.firstname) for e in Eleve.query.filter_by(promotion_id=new_classe.promotion_id).order_by(Eleve.name).all()]
+    form.eleves_id.choices = list_eleves
     if form.validate_on_submit():
-        # oldclasse = Classe.query.filter_by(name=form.name.data).first()
-        # if oldclasse:
-        #     flash(f'{form.name.data.upper()} '
-        #           f' déjà présente dans votre base de données !')
-        #     return redirect(url_for('home_niveau'))
-        # classe = Classe(name=form.name.data.upper())
-        # db.session.add(classe)
-        # db.session.commit()
-        # flash(f'Classe :  {form.name.data.capitalize()} ajoutée !')
-        return redirect(url_for('home_classe'))
+        print(form.eleves_id.data)
+        data = form.eleves_id.data
+        for eleve_id in data:
+            eleve=Eleve.query.get(eleve_id)
+            print(eleve)
+            new_classe.classe.append(eleve)
+        db.session.commit()
+
+        return render_template('newClasse4.html', title='Nouvelle classe', data=data)
     return render_template('newClasse3.html', title='Nouvelle classe', form=form)
     # return render_template('newClasse3.html', title='Nouvelle classe', form=form, propo_nom=propo_nom)
+
+
+@app.route('/delclasse/<classe_id>/<confirm>', methods=['GET', 'POST'])
+@login_required
+def delclasse(classe_id, confirm):
+    if confirm == '0':
+        delclasse = Classe.query.get(classe_id)
+        return render_template('conf_del_classe.html', title='Confirmation effacement classe', classe=delclasse)
+    else:
+        delclasse = Classe.query.get(classe_id)
+        db.session.delete(delclasse)
+        db.session.commit()
+        flash(f'Classe supprimée !')
+        return redirect(url_for('home_classe'))
+
+
+@app.route('/updateClasse/<classe_id>', methods=['GET', 'POST'])
+@login_required
+def updateClasse(classe_id):
+    oldClasse = Classe.query.get(classe_id)
+    form = NewClasseForm1(obj=oldClasse, name=oldClasse.name)
+
+    if form.validate_on_submit():
+        name = propo_nom, promotion_id = form.promotion.data, niveau_id = form.niveau.data,
+        oldClasse.promotion_id = form.promotion.data
+        oldClasse.niveau_id = form.niveau.data
+        oldClasse.annee_scolaire_id = form.annee_scolaire.data
+
+        db.session.add(oldClasse)
+        db.session.commit()
+        flash(f'Classe {form.name.data} modifiée !')
+        return redirect(url_for('home_niveau'))
+    return render_template('updateNiveau.html', title='Modification niveau', form=form, niveau_id=niveau_id)
 
 
 @app.route('/stage/')

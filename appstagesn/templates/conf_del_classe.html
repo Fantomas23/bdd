@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+        {% block app_content %}
+
+        <div class="jumbotron">
+            <h1> Classe </h1>
+        </div>
+
+        <div class="alert alert-danger" role="alert">
+            Souhaitez-vous supprimer la classe {{classe.name}} de la base de donnée ?
+            <br>  ATTENTION, cette action est irréversible.</br>
+        </div>
+        <div>
+
+            <a href="{{url_for('delclasse',  classe_id= classe.id, confirm=1) }}" class="btn btn-warning" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Supprimer une classe"> <i class="glyphicon glyphicon-minus"></i> Oui</a>
+             <a href="{{url_for('home_classe') }}" class="btn btn-danger" role="button" aria-disabled="true"
+                            data-toggle="tooltip" data-placement="right" title="Annuler supprimer"> <i class="glyphicon glyphicon-remove"></i> Non</a>
+        </div>
+
+
+        {% endblock %}

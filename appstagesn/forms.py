@@ -94,18 +94,18 @@ class NewClasseForm1(FlaskForm):
     submit = SubmitField('Valider')
 
 
-class NewClasseForm2(FlaskForm):
-    name = StringField('Nom', validators=[DataRequired()])
-    submit = SubmitField('Valider')
+# class NewClasseForm2(FlaskForm):
+#     name = StringField('Nom', validators=[DataRequired()])
+#     submit = SubmitField('Valider')
 
 
 class EleveToClasseForm(FlaskForm):
-    multiselect = SelectMultipleField("Elèves de la promo", coerce=int)
+    eleves_id = SelectMultipleField("Elèves de la promo", coerce=int)
     submit = SubmitField('Valider')
 
-    def __init__(self, *args, **kwargs):
-        super(EleveToClasseForm, self).__init__(*args, **kwargs)
-        self.multiselect.choices = [(e.id, e.name+" "+e.firstname) for e in (Eleve.query.all())]
+    # def __init__(self, *args, **kwargs):
+        # super(EleveToClasseForm, self).__init__(*args, **kwargs)
+        # self.multiselect.choices = [(e.id, e.name+" "+e.firstname) for e in (Eleve.query.all())]
 
 
 class NewStageForm1(FlaskForm):
